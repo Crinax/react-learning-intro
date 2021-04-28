@@ -58,7 +58,7 @@ class Radio extends React.Component {
     render() {
 
         return (
-            <div onClick={() => this.changeState(!this.state.isOn ? this.props.activeColor : this.props.passiveColor)} className={"radio-element " + this.state.className} style={{backgroundColor: this.state.background, borderColor: this.props.activeColor}}></div>
+            <div onClick={(e) => this.changeState(!this.state.isOn ? this.props.activeColor : this.props.passiveColor, e)} className={"radio-element " + this.state.className} style={{backgroundColor: this.state.background, borderColor: this.props.activeColor}}></div>
         );
     }
 }
@@ -73,12 +73,38 @@ class ShopingList extends React.Component {
         );
     }
 }
-function tick() {
-    
-
-    ReactDOM.render(
-        <ShopingList name="Джейк" list="Это просто список продуктов или не продуктов :)"></ShopingList>,
-        document.getElementById('root')
-    );
+class AnonimGreating extends React.Component {
+    render() {
+        return (
+            <span>Аноним</span>
+        );
+    }
 }
-setInterval(tick, 1000)
+class UserGreating extends React.Component {
+    render() {
+        return (
+            <span>Пользователь</span>
+        );
+    }
+}
+class Greating extends React.Component {
+    render() {
+        return (
+            <p>Добрый день, {(() => { if (this.props.isLoggining) { return <UserGreating></UserGreating> } else { return <AnonimGreating></AnonimGreating> } })()}</p>
+        )
+    }
+}
+class Main extends React.Component {
+    render() {
+        return (
+            <div className="main">
+                <ShopingList name="Джейк" list="Это просто список продуктов или не продуктов :)"></ShopingList>
+                <Greating isLoggining={(() => true)()}></Greating>
+            </div>
+        )
+    }
+}
+ReactDOM.render(
+    <Main></Main>,
+    document.getElementById('root')
+);
