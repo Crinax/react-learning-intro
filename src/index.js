@@ -1,4 +1,3 @@
-import { ReactComponent } from '*.svg';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './general.css';
@@ -40,10 +39,27 @@ class ShopElement extends React.Component {
     }
 }
 class Radio extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOn: false,
+            className: "inactive",
+            background: 'gray'
+        }
+        this.changeState = this.changeState.bind(this);
+    }
+    changeState(color) {
+        this.setState({
+            background: color,
+            isOn: !this.state.isOn,
+            className: !this.state.isOn ? 'active' : 'inactive'
+        });
+    }
     render() {
-        return (
 
-        )
+        return (
+            <div onClick={(() => {this.changeState(!this.state.isOn ? this.props.activeColor : this.props.passiveColor)})} className={"radio-element " + this.state.className} style={{backgroundColor: this.state.background, borderColor: this.props.activeColor}}></div>
+        );
     }
 }
 class ShopingList extends React.Component {
@@ -52,7 +68,7 @@ class ShopingList extends React.Component {
             <div className="shopping-list">
                 <ShopHeader name="Джуйк"></ShopHeader>
                 <ShopElement ul={this.props.list}></ShopElement>
-                <Radio passiveColor="gray" activeColor="green"></Radio>
+                <Radio passiveColor="#555555" activeColor="#55aa55"></Radio>
             </div>
         );
     }
