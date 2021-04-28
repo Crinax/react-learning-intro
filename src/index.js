@@ -58,7 +58,7 @@ class Radio extends React.Component {
     render() {
 
         return (
-            <div onClick={(() => {this.changeState(!this.state.isOn ? this.props.activeColor : this.props.passiveColor)})} className={"radio-element " + this.state.className} style={{backgroundColor: this.state.background, borderColor: this.props.activeColor}}></div>
+            <div onClick={() => this.changeState(!this.state.isOn ? this.props.activeColor : this.props.passiveColor)} className={"radio-element " + this.state.className} style={{backgroundColor: this.state.background, borderColor: this.props.activeColor}}></div>
         );
     }
 }
