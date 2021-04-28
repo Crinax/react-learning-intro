@@ -5,9 +5,10 @@
     background-color: #fff;
     border: 3px solid #fff;
 }
-.radio-element.inactive, .radio-element.active {
+.radio-element.inactive, .radio-element.active, .radio-element.inactive::after, .radio-element.active::after {
     position: relative;
     transition: .3s;
+    cursor: pointer;
 }
 .radio-element.inactive::after {
     content: '';
@@ -27,5 +28,6 @@
     width: 25px;
     height: 25px;
     border-radius: 100%;
-    right: 0
+    left: 0;
+    transform: translate(100%);
 }
