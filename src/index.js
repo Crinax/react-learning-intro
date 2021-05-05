@@ -258,16 +258,22 @@ class PasswordField extends React.Component {
 class Select extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ['red', 'yellow']};
+        this.state = {value: []};
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
-        this.setState({value: this.state.value + [event.target.value]});
-        console.log(this.state.value);
+        var arr = this.state.value;
+        if (arr.indexOf(event.target.value) !== -1) {
+            arr.splice(arr.indexOf(event.target.value), 1);
+        }
+        else {
+            arr.push(event.target.value);
+        }
+        this.setState({value: arr});
     }
     render() {
         return (
-            <select value={this.state.value} multiple={true} onChange={this.handleChange}>
+            <select value={this.state.value} multiple={true} onChange={this.handleChange} style={{width: '110px', height: '105px', overflow: 'hidden'}}>
                 <option value="red">Красный</option>
                 <option value="blue">Синий</option>
                 <option value="yellow">Жёлтый</option>
@@ -275,6 +281,129 @@ class Select extends React.Component {
                 <option value="black">Чёрный</option>
                 <option value="white">Белый</option>
             </select>
+        );
+    }
+}
+class Reservation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isGoing: true,
+            numberOfGuests: 2
+        };
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({ [name]: value });
+    }
+    render() {
+        return (
+            <form>
+                <label>
+                    Пойдут ли гости? 
+                    <input
+                        name="isGoing"
+                        type="checkbox"
+                        checked={this.state.isGoing}
+                        onChange={this.handleInputChange}
+                    /><br/>
+                </label>
+                {this.state.isGoing &&
+                    <label>
+                        Сколько гостей пойдёт? <br/>
+                        <input
+                            name="numberOfGuests"
+                            type="number"
+                            value={this.state.numberOfGuests}
+                            onChange={this.handleInputChange}
+                        />
+                        {this.state.numberOfGuests > 20 &&
+                            <b><i>Мы не располагаем таким количеством мест</i></b>
+                        }
+                    </label>
+                }
+            </form>
+        );
+    }
+}
+class Calculator extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {temperature: '', scale: 'c'};
+        this.handleCelChange = this.handleCelChange.bind(this);
+        this.handleFarChange = this.handleFarChange.bind(this);
+    }
+    handleCelChange(temperature) {
+        this.setState({scale: 'c', temperature});
+    }
+    handleFarChange(temperature) {
+        this.setState({scale: 'f', temperature});
+    }
+    render() {
+        const scale = this.state.scale;
+        const temperature = this.state.temperature;
+        const cel = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+        const far = scale === 'c' ? tryConvert(temperature, toFarenheit) : temperature;
+        return (
+            <div>
+                <Temperature
+                    scale='c'
+                    temperature={cel}
+                    onTemperatureChange={this.handleCelChange}
+                />
+                <Temperature
+                    scale='f'
+                    temperature={far}
+                    onTemperatureChange={this.handleFarChange}
+                />
+            </div>
+        );
+    }
+}
+const scalesName = {
+    c: 'Цельсия',
+    f: 'Фаренгейта'
+}
+function toCelsius(deg) {
+    return (deg - 32) * 5 / 9
+}
+function toFarenheit(deg) {
+    return (deg * 9 / 5) + 32
+}
+function tryConvert(value, convert) {
+    const input = parseFloat(value);
+    if (Number.isNaN(input)) {
+        return '';
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+}
+class Temperature extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {temperature: ''};
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event) {
+        // this.setState({temperature: event.target.value});
+        this.props.onTemperatureChange(event.target.value); // <-- Подъём состояния
+    }
+    render() {
+        // const temperature = this.state.temperature;
+        const temperature = this.props.temperature;  // <-- Подъём состояния
+        const scale = this.props.scale;
+        return (
+            <fieldset>
+                <legend>Введите температуру в градусах { scalesName[scale] }</legend>
+                <input 
+                    value={temperature}
+                    onChange={this.handleChange}
+                />
+            </fieldset>
         );
     }
 }
@@ -289,6 +418,8 @@ class Main extends React.Component {
                 <Increaser />
                 <PasswordField />
                 <Select />
+                <Reservation />
+                <Calculator />
             </div>
         )
     }
