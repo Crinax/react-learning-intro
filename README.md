@@ -1,9 +1,6 @@
-# TodoList on React
+# Learning React
 
-This project is simple todo list whas created on react
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project shows how I learning React
 
 ## Available Scripts
 
