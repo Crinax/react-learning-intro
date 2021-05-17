@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './general.css';
+import {SplitDis, Chat, Info} from './splitdis';
 
 class ShopHeader extends React.Component {
     constructor (props) {
@@ -420,6 +421,10 @@ class Main extends React.Component {
                 <Select />
                 <Reservation />
                 <Calculator />
+                <SplitDis>
+                    <Chat />
+                    <Info />
+                </SplitDis>
             </div>
         )
     }
