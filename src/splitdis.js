@@ -34,9 +34,7 @@ class Chat extends React.Component {
         this.setState({ messages: result});
     }
     render() {
-        console.log(Array.isArray(this.state.messages));
         var messages = this.state.messages;
-        console.log(messages, Array.isArray(messages));
         messages = messages.map((val, index) => {
             return (
                 <div id="chat-card" key={index}>
@@ -67,7 +65,6 @@ class Info extends React.Component {
 }
 class SplitDis extends React.Component {
     render() {
-        console.log(this.props.children);
         return (
             <div className="split-section">
                 <div className="split-section__left">{ this.props.children[0] }</div>

@@ -40,3 +40,33 @@
     height: 30vh;
     overflow-y: scroll;
 }
+.not-checked {
+    background-color: #5f5fff;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    transition: .3s;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.checked {
+    border: 2px solid #5f5fff;
+    background-color: transparent;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    transition: .3s;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.checkbox-wrapper {
+    display: flex;
+    padding: 1vh 1vw;
+    align-items: center;
+    border: 1px solid #000;
+}
+.text-after-checkbox {
+    margin-left: 1vw;
+}

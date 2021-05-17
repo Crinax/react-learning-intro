@@ -408,6 +408,27 @@ class Temperature extends React.Component {
         );
     }
 }
+class Checkbox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isChecked: false,
+            className: 'checked'
+        }
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+        this.setState({ className: this.state.isChecked ? "checked" : "not-checked", isChecked: !this.state.isChecked });
+    }
+    render() {
+        return (
+            <div className="checkbox-wrapper">
+                <div className={this.state.className} onClick={this.handleClick}></div>
+                <span className="text-after-checkbox">{" " + this.props.children}</span><br />
+            </div>
+        );
+    }
+}
 class Main extends React.Component {
     render() {
         return (
@@ -425,6 +446,9 @@ class Main extends React.Component {
                     <Chat />
                     <Info />
                 </SplitDis>
+                <Checkbox textSide="right">
+                    Click on me!
+                </Checkbox>
             </div>
         )
     }
